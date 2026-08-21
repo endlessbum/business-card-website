@@ -69,6 +69,14 @@ function Sidebar() {
 
 function Topbar() {
   const [open, setOpen] = React.useState(false)
+
+  useEffect(() => {
+    if (!open) return
+    const onScroll = () => setOpen(false)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [open])
+
   return (
     <header className="topbar">
       <a href="#top" className="brand">

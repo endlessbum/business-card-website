@@ -1,6 +1,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--scroll-offset, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -31,6 +32,12 @@ html {
 
 * {
   box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -71,6 +78,7 @@ a {
 
 .app {
   min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   background: var(--bg);
 }
@@ -198,6 +206,7 @@ a {
 
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -780,13 +789,14 @@ a {
     position: sticky;
     top: 0;
     z-index: 20;
-    padding: 0.9rem 1.2rem;
+    padding: calc(0.9rem + env(safe-area-inset-top, 0px)) 1.2rem 0.9rem;
     background: rgba(20, 21, 24, 0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
   }
 
   .burger {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -802,6 +812,19 @@ a {
     height: 2px;
     background: var(--text);
     border-radius: 1px;
+    transition: transform 0.25s ease, background 0.2s ease;
+  }
+
+  .burger:hover span {
+    background: var(--accent);
+  }
+
+  .burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .burger[aria-expanded='true'] span:nth-child(2) {
+    transform: translateY(-3.5px) rotate(-45deg);
   }
 
   .topbar-nav {
@@ -814,6 +837,9 @@ a {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
+    max-height: calc(100vh - 64px);
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
   }
 
   .topbar-nav a {
@@ -831,11 +857,12 @@ a {
 
   .content {
     margin-left: 0;
-    padding: 1.6rem 1.2rem 1.5rem;
+    padding: 1.6rem 1.2rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .hero {
     min-height: calc(100vh - 60px);
+    min-height: calc(100dvh - 60px);
   }
 
   .grid-2 {
@@ -846,6 +873,35 @@ a {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.4rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 3.2rem 0;
+  }
+
+  .hero-name {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+  }
+
+  .trait-row {
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .trait-pole {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+  }
+
+  .trait-value {
+    margin: 0 0.5rem;
+  }
+
+  .modal {
+    padding: 1.4rem 1.1rem;
   }
 }
 
