@@ -108,7 +108,7 @@ export const quotes = {
   items: [
     { ru: 'иногда, чтобы все получилось, нужно, чтобы все пошло не так', en: 'sometimes, in order to get it right, everything has to go wrong' },
     { ru: 'переживания не избавляют тебя от завтрашних проблем, но они забирают сегодняшний покой', en: "worrying won’t take away tomorrow’s problems, but it will take away today’s peace" },
-    { ru: 'Если ты отговариваешь себя - это твое. Если уговариваешь - не твое', en: "if you talk yourself out of it — it’s yours. If you talk yourself into it — it’s not yours" },
+    { ru: 'если ты отговариваешь себя - это твое. Если уговариваешь - не твое', en: "if you talk yourself out of it — it’s yours. If you talk yourself into it — it’s not yours" },
     { ru: 'ты можешь немножко выпить и оставить хорошее впечатление, а можешь на***риться и оставить незабываемое', en: "you can have a little drink and leave a good impression, or you can get completely wasted and leave an unforgettable one" },
     { ru: 'если вода в ванной стала холодной, значит, ей пользуется кто-то другой', en: "if the water in the bathroom has become cold, it means someone else is using it" },
     { ru: 'если будешь гнаться за бабочками - они улетят. Но если потратишь время на постройку сада, то они прилетят сами', en: "if you chase after butterflies, they’ll fly away. But if you spend time building a garden, they’ll come to you on their own" },
