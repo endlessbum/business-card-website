@@ -113,7 +113,7 @@ export const quotes = {
     { ru: 'ты можешь немножко выпить и оставить хорошее впечатление, а можешь на***риться и оставить незабываемое', en: "you can have a little drink and leave a good impression, or you can get completely wasted and leave an unforgettable one" },
     { ru: 'если будешь гнаться за бабочками - они улетят. Но если потратишь время на постройку сада, то они прилетят сами', en: "if you chase after butterflies, they’ll fly away. But if you spend time building a garden, they’ll come to you on their own" },
     { ru: 'я сначала откладываю дела на завтра, а потом на**й', en: "first, I put things off until tomorrow, and then… f**k it" },
-    { ru: 'Если не занят сексом, то и не стони', en: "If you're not having sex, then don't moan" },
+    { ru: 'если не занят сексом, то и не стони', en: "if you're not having sex, then don't moan" },
     { ru: 'чем дольше едешь не в том поезде, тем сложнее поездка обратно', en: "the longer you’re on the wrong train, the harder the return trip is" },
   ],
 }
