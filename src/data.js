@@ -137,7 +137,7 @@ export const footer = {
 export const privacy = {
   title: 'политика конфиденциальности',
   titleRu: 'privacy policy',
-  updated: 'дата последнего обновления: агуст 2026',
+  updated: 'дата последнего обновления: август 2026',
   sections: [
     {
       title: 'общие положения',
