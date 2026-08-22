@@ -888,10 +888,15 @@ a {
 
 @media (max-width: 640px) {
   .trans {
+    display: none;
     font-size: 0.75em;
     line-height: 1.5;
     margin-top: 0.2rem;
     padding-left: 0.5rem;
+  }
+
+  .trans-open .trans {
+    display: block;
   }
 }
 
@@ -937,10 +942,6 @@ a {
 
   .conflicts {
     gap: 1rem;
-  }
-
-  .conflict-bar {
-    height: 8px;
   }
 
   .fact {
@@ -997,6 +998,26 @@ a {
     font-size: 1.22rem;
     letter-spacing: 0.01em;
     overflow-wrap: anywhere;
+  }
+
+  .trait-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem 0;
+  }
+
+  .trait-pole-left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .trait-value {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .trait-pole-right {
+    grid-column: 1;
+    grid-row: 3;
   }
 
   .social {

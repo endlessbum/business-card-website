@@ -49,6 +49,22 @@ function useActiveSection() {
   return active
 }
 
+function useMobileTransToggle() {
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)')
+    const onTap = (e) => {
+      if (!mq.matches) return
+      const tapped = e.target.closest('.trans')
+      const host = (tapped ? tapped.parentElement : e.target).closest(
+        '.lead, .card-desc, .trait-pole, .hero-code, .hero-meta, .fact-text'
+      )
+      if (host) host.classList.toggle('trans-open')
+    }
+    document.addEventListener('click', onTap)
+    return () => document.removeEventListener('click', onTap)
+  }, [])
+}
+
 function Sidebar() {
   const active = useActiveSection()
 
@@ -84,16 +100,30 @@ function Topbar() {
     const onMouseDown = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false)
     }
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
     window.addEventListener('scroll', onScroll, { passive: true })
     document.addEventListener('mousedown', onMouseDown)
     return () => {
-      document.body.style.overflow = prevOverflow
       window.removeEventListener('scroll', onScroll)
       document.removeEventListener('mousedown', onMouseDown)
     }
   }, [open])
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const update = () => {
+      if (getComputedStyle(el).display === 'none') return
+      const h = el.getBoundingClientRect().height
+      document.documentElement.style.setProperty('--topbar-h', `${h}px`)
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => {
+      ro.disconnect()
+      document.documentElement.style.setProperty('--topbar-h', '')
+    }
+  }, [])
 
   return (
     <header className="topbar" ref={ref}>
@@ -377,6 +407,7 @@ function PrivacyModal({ open, onClose }) {
 
 function App() {
   useReveal()
+  useMobileTransToggle()
   const [policyOpen, setPolicyOpen] = React.useState(false)
   return (
     <div className="app">
