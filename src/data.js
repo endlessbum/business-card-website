@@ -85,6 +85,7 @@ export const facts = {
   title: 'facts',
   titleRu: 'факты',
   items: [
+    { ru: 'стаж работы >6 лет', en: "work experience >6 years" },
     { ru: 'отучился на дизайнера', en: "i graduated as a designer" },
     { ru: 'родился и живу в Москве', en: "i was born and live in Moscow" },
     { ru: 'в период с 2025 по 2026 сменил 4 работы', en: "between 2025 and 2026, I changed jobs four times" },
@@ -145,7 +146,7 @@ export const privacy = {
     {
       title: 'общие положения',
       titleEn: 'general provisions',
-      body: 'сайт gheofvens — личная страница, созданная для знакомства со мной и удобной навигации по соцсетям. Я уважаем вашу приватность и сознательно свожу сбор данных к нулю',
+      body: 'сайт gheofvens — личная страница, созданная для знакомства со мной и удобной навигации по соцсетям. Я уважаю вашу приватность и сознательно свожу сбор данных к нулю',
       bodyEn: 'the gheofvens website is a personal page created to introduce myself and provide convenient navigation through social media. I respect your privacy and deliberately keep data collection to a minimum',
     },
     {
