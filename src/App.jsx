@@ -25,25 +25,24 @@ function useActiveSection() {
 
   useEffect(() => {
     const ids = nav.map((n) => n.id)
-    const onScroll = () => {
-      const threshold = window.innerHeight * 0.35
-      let current = null
-      for (const id of ids) {
-        const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top <= threshold) current = id
-      }
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-        current = ids[ids.length - 1]
-      }
-      setActive(current)
+
+    const onEnter = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id)
+      })
     }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
+
+    const io = new IntersectionObserver(onEnter, {
+      rootMargin: '-35% 0px -55% 0px',
+      threshold: 0,
+    })
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) io.observe(el)
+    })
+
+    return () => io.disconnect()
   }, [])
 
   return active
@@ -83,7 +82,6 @@ function Sidebar() {
             </a>
           ))}
         </nav>
-        <div className="sidebar-cmd">{footer.cmd}</div>
       </div>
     </aside>
   )
@@ -92,6 +90,7 @@ function Sidebar() {
 function Topbar() {
   const [open, setOpen] = React.useState(false)
   const ref = React.useRef(null)
+  const navRef = React.useRef(null)
   const active = useActiveSection()
 
   useEffect(() => {
@@ -100,12 +99,40 @@ function Topbar() {
     const onMouseDown = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false)
     }
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+      const focusables = ref.current?.querySelectorAll(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      )
+      if (!focusables || focusables.length === 0) return
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     document.addEventListener('mousedown', onMouseDown)
+    document.addEventListener('keydown', onKey)
     return () => {
       window.removeEventListener('scroll', onScroll)
       document.removeEventListener('mousedown', onMouseDown)
+      document.removeEventListener('keydown', onKey)
     }
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const first = navRef.current?.querySelector('a')
+    if (first) first.focus()
   }, [open])
 
   useEffect(() => {
@@ -141,7 +168,7 @@ function Topbar() {
         <span />
       </button>
       {open && (
-        <nav className="topbar-nav">
+        <nav className="topbar-nav" ref={navRef}>
           {nav.map((n) => (
             <a
               key={n.id}
@@ -158,7 +185,18 @@ function Topbar() {
   )
 }
 
+function getAge(birthDate) {
+  const birth = new Date(birthDate)
+  const now = new Date()
+  let age = now.getFullYear() - birth.getFullYear()
+  const m = now.getMonth() - birth.getMonth()
+  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age -= 1
+  return age
+}
+
 function Hero() {
+  const age = getAge(profile.birth)
+
   return (
     <section id="top" className="hero">
       <p className="hero-code" data-reveal>
@@ -170,8 +208,14 @@ function Hero() {
         {profile.name}
       </h1>
       <div className="hero-meta" data-reveal>
-        {profile.alias}
-        <span className="trans">{profile.aliasEn}</span>
+        {profile.alias} · {profile.birthRu} ({age}) · {profile.city}
+        <span className="trans">
+          {profile.aliasEn} · {profile.birthEn} ({age}) · {profile.cityEn}
+        </span>
+      </div>
+      <div className="hero-scroll" aria-hidden>
+        <span className="hero-scroll-label">scroll</span>
+        <span className="hero-scroll-line" />
       </div>
     </section>
   )
@@ -242,7 +286,14 @@ function Character() {
                 <span className="trans trait-trans">{t.en}</span>
               </span>
             </div>
-            <span className="trait-bar">
+            <span
+              className="trait-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow={t.level}
+              aria-label={`${t.right} — ${t.level}%`}
+            >
               <span className="trait-bar-fill" style={{ '--target': `${t.level}%`, '--delay': `${i * 0.12}s` }} />
             </span>
           </div>
@@ -269,8 +320,11 @@ function Conflicts() {
                 <span className="trans trait-trans">{c.rightEn}</span>
               </span>
             </div>
-            <span className="conflict-bar">
+            <span className="conflict-bar" aria-hidden="true">
               <span className="conflict-cursor" style={{ '--delay': `${i * 0.15}s` }} />
+            </span>
+            <span className="sr-only">
+              напряжение между «{c.left}» и «{c.right}»
             </span>
           </div>
         ))}

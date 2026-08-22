@@ -1,7 +1,12 @@
 export const profile = {
   name: 'gheofvens',
-  alias: 'Серафим · 10 сентября 1998 (27) · Москва',
-  aliasEn: 'Serafim · September 10, 1998 (27) · Moscow',
+  alias: 'Серафим',
+  aliasEn: 'Serafim',
+  birth: '1998-09-10',
+  birthRu: '10 сентября 1998',
+  birthEn: 'September 10, 1998',
+  city: 'Москва',
+  cityEn: 'Moscow',
   role: 'в поиске своего дела и лучшей версии себя',
   roleEn: 'in search of one’s calling and the best version of oneself',
 }
@@ -40,11 +45,11 @@ export const loves = {
   title: 'loves',
   titleRu: 'что люблю',
   items: [
-    { emoji: '', label: 'людей и общение', desc: 'компанию, интересных людей, открытость, юмор, харизму и жизнерадостность', en: 'people and communication: company, interesting people, openness, humor, charisma, and cheerfulness' },
-    { emoji: '', label: 'создавать', desc: 'дизайн, работу руками и собственные проекты', en: 'to create: design, manual work, and one’s own projects' },
-    { emoji: '', label: 'визуальную эстетику', desc: 'фотографию, кино, архитектуру, красивые пространства и места', en: 'visual aesthetics: photography, cinema, architecture, beautiful spaces and places' },
-    { emoji: '', label: 'хорошо сделанные вещи', desc: 'качество, аккуратность, профессионализм и ощущение результата', en: 'well‑made things: quality, precision, professionalism, and a sense of accomplishment' },
-    { emoji: '', label: 'игры', desc: 'а как же, пару каточек в ml или cs2 никто не отменял', en: 'games: of course, no one’s canceled a couple of games in ML or CS2' },
+    { label: 'людей и общение', desc: 'компанию, интересных людей, открытость, юмор, харизму и жизнерадостность', en: 'people and communication: company, interesting people, openness, humor, charisma, and cheerfulness' },
+    { label: 'создавать', desc: 'дизайн, работу руками и собственные проекты', en: 'to create: design, manual work, and one’s own projects' },
+    { label: 'визуальную эстетику', desc: 'фотографию, кино, архитектуру, красивые пространства и места', en: 'visual aesthetics: photography, cinema, architecture, beautiful spaces and places' },
+    { label: 'хорошо сделанные вещи', desc: 'качество, аккуратность, профессионализм и ощущение результата', en: 'well‑made things: quality, precision, professionalism, and a sense of accomplishment' },
+    { label: 'игры', desc: 'а как же, пару каточек в ml или cs2 никто не отменял', en: 'games: of course, no one’s canceled a couple of games in ML or CS2' },
   ],
 }
 
@@ -99,7 +104,6 @@ export const goals = {
     { ru: 'стать специалистом «именитым, знающим своё дело и верящим в него».\nМастерство, качество, доведение до идеала — влиятельный, опытный, целеустремлённый человек, который доводит процессы до конца', en: 'to become a “renowned specialist who knows their craft and believes in it”.\nMastery, quality, bringing something to perfection — an influential, experienced, and goal‑oriented person who carries processes through to the end' },
     { ru: 'путешествия. Регулярные, как часть нормальной жизни', en: 'journeys. Regular, as part of normal life' },
     { ru: 'превратить желания в регулярное действие. Перестать «вечно ждать лучшего момента» и научиться действовать даже без сильного эмоционального подъёма', en: 'turn desires into regular action. Stop “forever waiting for the perfect moment” and learn to act even without a strong emotional upsurge' },
-    { ru: 'kalsarikännit (калсарикяннит) - финское слово. Означающее «выпивать дома в нижнем белье, не планируя никуда выходить»', en: 'kalsarikännit (kalsarikiannit) - is a Finnish word. It means “to drink at home in one’s underwear, without planning to go anywhere”' },
   ],
 }
 
