@@ -20,7 +20,7 @@ function useReveal() {
   }, [])
 }
 
-function Sidebar() {
+function useActiveSection() {
   const [active, setActive] = React.useState(null)
 
   useEffect(() => {
@@ -46,6 +46,12 @@ function Sidebar() {
     }
   }, [])
 
+  return active
+}
+
+function Sidebar() {
+  const active = useActiveSection()
+
   return (
     <aside className="sidebar">
       <div className="sidebar-inner">
@@ -69,16 +75,28 @@ function Sidebar() {
 
 function Topbar() {
   const [open, setOpen] = React.useState(false)
+  const ref = React.useRef(null)
+  const active = useActiveSection()
 
   useEffect(() => {
     if (!open) return
     const onScroll = () => setOpen(false)
+    const onMouseDown = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    document.addEventListener('mousedown', onMouseDown)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('scroll', onScroll)
+      document.removeEventListener('mousedown', onMouseDown)
+    }
   }, [open])
 
   return (
-    <header className="topbar">
+    <header className="topbar" ref={ref}>
       <a href="#top" className="brand">
         <span className="brand-mark">g</span>
         <span className="brand-name">{profile.name}</span>
@@ -95,7 +113,12 @@ function Topbar() {
       {open && (
         <nav className="topbar-nav">
           {nav.map((n) => (
-            <a key={n.id} href={`#${n.id}`} onClick={() => setOpen(false)}>
+            <a
+              key={n.id}
+              href={`#${n.id}`}
+              className={active === n.id ? 'is-active' : ''}
+              onClick={() => setOpen(false)}
+            >
               {n.label}
             </a>
           ))}
