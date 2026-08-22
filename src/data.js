@@ -131,7 +131,6 @@ export const socials = [
 export const footer = {
   line: '© gheofvens · 2026 · сделано для любознательных',
   policy: 'политика конфиденциальности',
-  cmd: '$ built with React + Vite',
 }
 
 export const privacy = {
