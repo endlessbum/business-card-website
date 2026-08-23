@@ -18,7 +18,6 @@ export const nav = [
   { id: 'conflicts', label: 'conflicts / конфликты' },
   { id: 'facts', label: 'facts / факты' },
   { id: 'goals', label: 'goals / цели' },
-  { id: 'quotes', label: 'quotes / цитаты' },
   { id: 'socials', label: 'socials / соцсети' },
 ]
 
@@ -105,21 +104,6 @@ export const goals = {
     { ru: 'стать специалистом «именитым, знающим своё дело и верящим в него».\nМастерство, качество, доведение до идеала — влиятельный, опытный, целеустремлённый человек, который доводит процессы до конца', en: 'to become a “renowned specialist who knows their craft and believes in it”.\nMastery, quality, bringing something to perfection — an influential, experienced, and goal‑oriented person who carries processes through to the end' },
     { ru: 'путешествия. Регулярные, как часть нормальной жизни', en: 'journeys. Regular, as part of normal life' },
     { ru: 'превратить желания в регулярное действие. Перестать «вечно ждать лучшего момента» и научиться действовать даже без сильного эмоционального подъёма', en: 'turn desires into regular action. Stop “forever waiting for the perfect moment” and learn to act even without a strong emotional upsurge' },
-  ],
-}
-
-export const quotes = {
-  title: 'quotes',
-  titleRu: 'цитаты',
-  items: [
-    { ru: 'иногда, чтобы все получилось, нужно, чтобы все пошло не так', en: 'sometimes, in order to get it right, everything has to go wrong' },
-    { ru: 'переживания не избавляют тебя от завтрашних проблем, но они забирают сегодняшний покой', en: "worrying won’t take away tomorrow’s problems, but it will take away today’s peace" },
-    { ru: 'если ты отговариваешь себя - это твое. Если уговариваешь - не твое', en: "if you talk yourself out of it — it’s yours. If you talk yourself into it — it’s not yours" },
-    { ru: 'ты можешь немножко выпить и оставить хорошее впечатление, а можешь на***риться и оставить незабываемое', en: "you can have a little drink and leave a good impression, or you can get completely wasted and leave an unforgettable one" },
-    { ru: 'если будешь гнаться за бабочками - они улетят. Но если потратишь время на постройку сада, то они прилетят сами', en: "if you chase after butterflies, they’ll fly away. But if you spend time building a garden, they’ll come to you on their own" },
-    { ru: 'я сначала откладываю дела на завтра, а потом на**й', en: "first, I put things off until tomorrow, and then… f**k it" },
-    { ru: 'если не занят сексом, то и не стони', en: "if you're not having sex, then don't moan" },
-    { ru: 'чем дольше едешь не в том поезде, тем сложнее поездка обратно', en: "the longer you’re on the wrong train, the harder the return trip is" },
   ],
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { profile, nav, about, loves, character, conflicts, facts, goals, quotes, socials, socialsTitle, footer, privacy } from './data'
+import { profile, nav, about, loves, character, conflicts, facts, goals, socials, socialsTitle, footer, privacy } from './data'
 
 function useReveal() {
   useEffect(() => {
@@ -371,29 +371,10 @@ function Goals() {
   )
 }
 
-function Quotes() {
-  return (
-    <section id="quotes" className="section">
-      <SectionHead title={quotes.title} titleRu={quotes.titleRu} index={7} />
-      <ul className="facts" data-reveal>
-        {quotes.items.map((q, i) => (
-          <li key={i} className="fact">
-            <span className="fact-mark">[ {String(i + 1).padStart(2, '0')} ]</span>
-            <span className="fact-text">
-              {q.ru}
-              <span className="trans">{q.en}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )
-}
-
 function Socials() {
   return (
     <section id="socials" className="section">
-      <SectionHead title={socialsTitle.title} titleRu={socialsTitle.titleRu} index={8} />
+      <SectionHead title={socialsTitle.title} titleRu={socialsTitle.titleRu} index={7} />
       <div className="socials" data-reveal>
         {socials.map((s) => (
           <a key={s.id} className="social" href={s.href} target="_blank" rel="noreferrer">
@@ -475,7 +456,6 @@ function App() {
         <Conflicts />
         <Facts />
         <Goals />
-        <Quotes />
         <Socials />
         <footer className="footer">
           <span>
