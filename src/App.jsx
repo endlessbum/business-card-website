@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { profile, nav, about, loves, character, conflicts, facts, goals, socials, socialsTitle, footer, privacy } from './data'
+import { profile, nav, about, loves, character, conflicts, chart, facts, goals, socials, socialsTitle, footer, privacy } from './data'
 
 function useReveal() {
   useEffect(() => {
@@ -25,17 +25,30 @@ function useActiveSection() {
 
   useEffect(() => {
     const ids = nav.map((n) => n.id)
+    const visible = new Map()
 
-    const onEnter = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActive(entry.target.id)
+    const pick = () => {
+      let best = null
+      let bestTop = Infinity
+      visible.forEach((top, id) => {
+        if (top < bestTop) {
+          bestTop = top
+          best = id
+        }
       })
+      if (best) setActive(best)
     }
 
-    const io = new IntersectionObserver(onEnter, {
-      rootMargin: '-35% 0px -55% 0px',
-      threshold: 0,
-    })
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) visible.set(e.target.id, e.boundingClientRect.top)
+          else visible.delete(e.target.id)
+        })
+        pick()
+      },
+      { rootMargin: '-20% 0px -50% 0px', threshold: 0 }
+    )
 
     ids.forEach((id) => {
       const el = document.getElementById(id)
@@ -55,7 +68,7 @@ function useMobileTransToggle() {
       if (!mq.matches) return
       const tapped = e.target.closest('.trans')
       const host = (tapped ? tapped.parentElement : e.target).closest(
-        '.lead, .card-desc, .trait-pole, .hero-code, .hero-meta, .fact-text'
+        '.lead, .trait-pole, .hero-code, .hero-meta, .fact-text'
       )
       if (host) host.classList.toggle('trans-open')
     }
@@ -64,9 +77,7 @@ function useMobileTransToggle() {
   }, [])
 }
 
-function Sidebar() {
-  const active = useActiveSection()
-
+function Sidebar({ active }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-inner">
@@ -76,7 +87,12 @@ function Sidebar() {
         </a>
         <nav className="nav">
           {nav.map((n) => (
-            <a key={n.id} href={`#${n.id}`} className={`nav-link ${active === n.id ? 'is-active' : ''}`}>
+            <a
+              key={n.id}
+              href={`#${n.id}`}
+              className={`nav-link ${active === n.id ? 'is-active' : ''}`}
+              aria-current={active === n.id ? 'true' : undefined}
+            >
               <span className="nav-dot" />
               {n.label}
             </a>
@@ -87,11 +103,10 @@ function Sidebar() {
   )
 }
 
-function Topbar() {
+function Topbar({ active }) {
   const [open, setOpen] = React.useState(false)
   const ref = React.useRef(null)
   const navRef = React.useRef(null)
-  const active = useActiveSection()
 
   useEffect(() => {
     if (!open) return
@@ -131,6 +146,16 @@ function Topbar() {
 
   useEffect(() => {
     if (!open) return
+    const mq = window.matchMedia('(min-width: 901px)')
+    const onDesktop = (e) => {
+      if (e.matches) setOpen(false)
+    }
+    mq.addEventListener('change', onDesktop)
+    return () => mq.removeEventListener('change', onDesktop)
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
     const first = navRef.current?.querySelector('a')
     if (first) first.focus()
   }, [open])
@@ -160,20 +185,22 @@ function Topbar() {
       </a>
       <button
         className="burger"
-        aria-label="menu"
+        aria-label={open ? 'close menu' : 'open menu'}
         aria-expanded={open}
+        aria-controls="topbar-nav"
         onClick={() => setOpen((v) => !v)}
       >
         <span />
         <span />
       </button>
       {open && (
-        <nav className="topbar-nav" ref={navRef}>
+        <nav className="topbar-nav" id="topbar-nav" ref={navRef}>
           {nav.map((n) => (
             <a
               key={n.id}
               href={`#${n.id}`}
               className={active === n.id ? 'is-active' : ''}
+              aria-current={active === n.id ? 'true' : undefined}
               onClick={() => setOpen(false)}
             >
               {n.label}
@@ -186,7 +213,7 @@ function Topbar() {
 }
 
 function getAge(birthDate) {
-  const birth = new Date(birthDate)
+  const birth = new Date(`${birthDate}T00:00:00`)
   const now = new Date()
   let age = now.getFullYear() - birth.getFullYear()
   const m = now.getMonth() - birth.getMonth()
@@ -224,7 +251,7 @@ function Hero() {
 function SectionHead({ title, titleRu, index }) {
   return (
     <div className="section-head" data-reveal>
-      <span className="section-index">0{index}</span>
+      <span className="section-index">{String(index).padStart(2, '0')}</span>
       <h2 className="section-title">
         {title} <span className="section-title-ru">{titleRu}</span>
       </h2>
@@ -252,18 +279,17 @@ function Loves() {
   return (
     <section id="loves" className="section">
       <SectionHead title={loves.title} titleRu={loves.titleRu} index={2} />
-      <div className="grid grid-2">
+      <ul className="facts" data-reveal>
         {loves.items.map((item, i) => (
-          <div key={i} className="card">
-            <span className="card-num">{String(i + 1).padStart(2, '0')}</span>
-            <h3 className="card-title">{item.label}</h3>
-            <p className="card-desc">
-              {item.desc}
+          <li key={i} className="fact">
+            <span className="fact-mark">[ {String(i + 1).padStart(2, '0')} ]</span>
+            <span className="fact-text">
+              {item.label}: {item.desc}
               <span className="trans">{item.en}</span>
-            </p>
-          </div>
+            </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   )
 }
@@ -333,10 +359,26 @@ function Conflicts() {
   )
 }
 
+function Chart() {
+  return (
+    <section id="chart" className="section">
+      <SectionHead title={chart.title} titleRu={chart.titleRu} index={5} />
+      <div className="section-body" data-reveal>
+        {chart.text.map((p, i) => (
+          <p key={i} className="lead">
+            {p.ru}
+            <span className="trans">{p.en}</span>
+          </p>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function Facts() {
   return (
     <section id="facts" className="section">
-      <SectionHead title={facts.title} titleRu={facts.titleRu} index={5} />
+      <SectionHead title={facts.title} titleRu={facts.titleRu} index={6} />
       <ul className="facts" data-reveal>
         {facts.items.map((f, i) => (
           <li key={i} className="fact">
@@ -355,7 +397,7 @@ function Facts() {
 function Goals() {
   return (
     <section id="goals" className="section">
-      <SectionHead title={goals.title} titleRu={goals.titleRu} index={6} />
+      <SectionHead title={goals.title} titleRu={goals.titleRu} index={7} />
       <ul className="facts goals" data-reveal>
         {goals.items.map((g, i) => (
           <li key={i} className="fact">
@@ -374,7 +416,7 @@ function Goals() {
 function Socials() {
   return (
     <section id="socials" className="section">
-      <SectionHead title={socialsTitle.title} titleRu={socialsTitle.titleRu} index={7} />
+      <SectionHead title={socialsTitle.title} titleRu={socialsTitle.titleRu} index={8} />
       <div className="socials" data-reveal>
         {socials.map((s) => (
           <a key={s.id} className="social" href={s.href} target="_blank" rel="noreferrer">
@@ -399,16 +441,44 @@ function Socials() {
 }
 
 function PrivacyModal({ open, onClose }) {
+  const modalRef = React.useRef(null)
+  const closeRef = React.useRef(null)
+  const prevFocusRef = React.useRef(null)
+
   useEffect(() => {
     if (!open) return
+
+    prevFocusRef.current = document.activeElement
+    closeRef.current?.focus()
+
     const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const focusables = modalRef.current?.querySelectorAll(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      )
+      if (!focusables || focusables.length === 0) return
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
+
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
     return () => {
       window.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
+      if (prevFocusRef.current instanceof HTMLElement) prevFocusRef.current.focus()
+      prevFocusRef.current = null
     }
   }, [open, onClose])
 
@@ -416,8 +486,15 @@ function PrivacyModal({ open, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" aria-label="close" onClick={onClose}>
+      <div
+        className="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={privacy.title}
+        ref={modalRef}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button ref={closeRef} className="modal-close" aria-label="close" onClick={onClose}>
           ✕
         </button>
         <h3 className="modal-title">
@@ -443,17 +520,20 @@ function PrivacyModal({ open, onClose }) {
 function App() {
   useReveal()
   useMobileTransToggle()
+  const active = useActiveSection()
   const [policyOpen, setPolicyOpen] = React.useState(false)
+  const closePolicy = React.useCallback(() => setPolicyOpen(false), [])
   return (
     <div className="app">
-      <Sidebar />
-      <Topbar />
+      <Sidebar active={active} />
+      <Topbar active={active} />
       <main className="content">
         <Hero />
         <About />
         <Loves />
         <Character />
         <Conflicts />
+        <Chart />
         <Facts />
         <Goals />
         <Socials />
@@ -466,7 +546,7 @@ function App() {
           </span>
         </footer>
       </main>
-      <PrivacyModal open={policyOpen} onClose={() => setPolicyOpen(false)} />
+      <PrivacyModal open={policyOpen} onClose={closePolicy} />
     </div>
   )
 }

@@ -16,6 +16,7 @@ export const nav = [
   { id: 'loves', label: 'loves / что люблю' },
   { id: 'character', label: 'character / характер' },
   { id: 'conflicts', label: 'conflicts / конфликты' },
+  { id: 'chart', label: 'my chart / моя карта' },
   { id: 'facts', label: 'facts / факты' },
   { id: 'goals', label: 'goals / цели' },
   { id: 'socials', label: 'socials / соцсети' },
@@ -77,6 +78,37 @@ export const conflicts = {
     { left: 'желание свободы', leftEn: 'desire for freedom', right: 'необходимость дисциплины', rightEn: 'need for discipline' },
     { left: 'сильные чувства', leftEn: 'strong feelings', right: 'восприятие чувств как слабости', rightEn: 'perceiving feelings as weakness' },
     { left: 'много идей', leftEn: 'many ideas', right: 'слабая стабильность доведения до конца', rightEn: 'weak consistency in seeing things through' },
+  ],
+}
+
+export const chart = {
+  title: 'my chart',
+  titleRu: 'моя карта',
+  text: [
+    {
+      ru: 'год — Земляной Тигр. Это даёт мне внутреннюю силу, амбиции и какую-то природную харизму. Я не из тех, кто прячется в тени. Мне комфортнее, когда я веду, беру ответственность и иду вперёд. При этом Земля в годе меня немного «заземляет» — я не такой импульсивный, как чистые Тигры. Умею быть практичным и рассчитывать силы.',
+      en: 'year — Earth Tiger. This gives me inner strength, ambition, and a certain natural charisma. I’m not the kind who hides in the shadows. I feel more comfortable when I lead, take responsibility, and move forward. At the same time, the Earth in the year grounds me a bit — I’m not as impulsive as pure Tigers. I can be practical and measure my strength.',
+    },
+    {
+      ru: 'месяц — Металлический Петух. Отсюда у меня внимание к деталям, желание, чтобы всё было чётко и красиво. Я довольно требователен к себе и к окружающим в плане порядка и качества.',
+      en: 'month — Metal Rooster. From here I get attention to detail and a desire for everything to be precise and beautiful. I’m quite demanding of myself and others when it comes to order and quality.',
+    },
+    {
+      ru: 'день — Металлическая Обезьяна, а Господин дня — Ян Металл. Это, наверное, самое важное. Я как клинок: прямой, твёрдый, принципиальный. Не люблю ходить вокруг да около. Если вижу, что что-то неправильно — говорю. Иногда это режет, я знаю. Но врать и играть в игры мне тяжело. Я очень ценю верность и сам стараюсь быть человеком, на которого можно положиться. Когда вокруг хаос или давление — я, наоборот, собираюсь и действую. Без серьёзных задач мне становится скучно, и я как будто «ржавею».',
+      en: 'day — Metal Monkey, and the Day Master is Yang Metal. This is probably the most important part. I’m like a blade: direct, firm, principled. I don’t like beating around the bush. If I see that something is wrong, I say it. Sometimes it cuts, I know. But lying and playing games is hard for me. I value loyalty very much and try to be someone people can rely on. When there’s chaos or pressure around me, I instead gather myself and act. Without serious tasks I get bored, and it’s like I “rust”.',
+    },
+    {
+      ru: 'час рождения — Металлический Дракон. Это добавляет масштаб. Мне важно не просто делать, а делать что-то значимое. Хочется оставить след, построить что-то своё. Внутри есть амбиция и желание расти.',
+      en: 'hour of birth — Metal Dragon. This adds scale. It matters to me not just to do things, but to do something meaningful. I want to leave a mark and build something of my own. Inside there is ambition and a desire to grow.',
+    },
+    {
+      ru: 'в целом я человек сильной воли. Упрямый, да. Прямолинейный — тоже. Иногда слишком жёсткий. Но если уж кого-то впустил в свой круг — буду защищать и поддерживать. Мне нужны цели, вызовы и пространство, где можно принимать решения. Тогда я по-настоящему раскрываюсь',
+      en: 'overall, I’m a person of strong will. Stubborn, yes. Straightforward, too. Sometimes too harsh. But if I let someone into my circle, I’ll protect and support them. I need goals, challenges, and space where I can make decisions. That’s when I truly open up',
+    },
+    {
+      ru: 'P.S. не хватает лишь года — металлического тигра...',
+      en: 'P.S. the only thing missing is the year — a Metal Tiger...',
+    },
   ],
 }
 

@@ -113,6 +113,7 @@ a {
   flex-direction: column;
   padding: 2.2rem 1.8rem;
   gap: 2.6rem;
+  overflow-y: auto;
 }
 
 .brand {
@@ -187,10 +188,6 @@ a {
   box-shadow: 0 0 8px var(--accent);
 }
 
-.sidebar-foot {
-  display: none;
-}
-
 /* ---------- topbar (mobile) ---------- */
 
 .topbar {
@@ -262,10 +259,6 @@ a {
   font-size: 15px;
   color: var(--accent);
   letter-spacing: 0.08em;
-}
-
-.hero-divider {
-  color: var(--faint);
 }
 
 .hero-scroll {
@@ -366,48 +359,6 @@ a {
   border-left: 2px solid var(--border);
   font-size: 0.82em;
   color: var(--faint);
-}
-
-/* ---------- cards ---------- */
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.4rem 1.5rem;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  border-color: var(--faint);
-  background: var(--panel-2);
-}
-
-.card-num {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--faint);
-}
-
-.card-title {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: 15.5px;
-  margin: 0.4rem 0 0.3rem;
-  color: var(--accent);
-}
-
-.card-desc {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 0;
 }
 
 /* ---------- traits ---------- */
@@ -917,10 +868,6 @@ a {
 
   .hero {
     min-height: calc(100dvh - var(--topbar-h));
-  }
-
-  .grid-2 {
-    grid-template-columns: 1fr;
   }
 
   .footer {
