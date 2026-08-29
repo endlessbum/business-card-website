@@ -1,9 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { profile, nav, about, loves, character, conflicts, chart, natal, facts, goals, socials, socialsTitle, footer, privacy } from './data'
 
 function useReveal() {
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const root = document.documentElement
+    root.classList.add('reveal-initial')
     const els = document.querySelectorAll('[data-reveal]')
+    const inView = (el) => {
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight || document.documentElement.clientHeight
+      return r.top < vh * 0.88 && r.bottom > 0
+    }
+    els.forEach((el) => {
+      if (inView(el)) el.classList.add('is-visible')
+    })
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -16,7 +26,14 @@ function useReveal() {
       { threshold: 0.12 }
     )
     els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    const raf = requestAnimationFrame(() => {
+      root.classList.remove('reveal-initial')
+    })
+    return () => {
+      cancelAnimationFrame(raf)
+      root.classList.remove('reveal-initial')
+      io.disconnect()
+    }
   }, [])
 }
 
@@ -24,7 +41,7 @@ function useActiveSection() {
   const [active, setActive] = React.useState(null)
 
   useEffect(() => {
-    const ids = nav.map((n) => n.id)
+    const ids = ['top', ...nav.map((n) => n.id)]
     const visible = new Map()
 
     const pick = () => {
@@ -36,7 +53,7 @@ function useActiveSection() {
           best = id
         }
       })
-      if (best) setActive(best)
+      if (best) setActive(best === 'top' ? null : best)
     }
 
     const io = new IntersectionObserver(
@@ -160,7 +177,7 @@ function Topbar({ active }) {
     if (first) first.focus()
   }, [open])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
     const update = () => {
@@ -539,6 +556,23 @@ function App() {
   const active = useActiveSection()
   const [policyOpen, setPolicyOpen] = React.useState(false)
   const closePolicy = React.useCallback(() => setPolicyOpen(false), [])
+
+  useEffect(() => {
+    const html = document.documentElement
+    const prev = html.style.scrollBehavior
+    const reset = () => {
+      html.style.scrollBehavior = 'auto'
+      window.scrollTo(0, 0)
+      html.style.scrollBehavior = prev
+    }
+    reset()
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        if (window.scrollY <= 1) reset()
+      })
+    }
+  }, [])
+
   return (
     <div className="app">
       <Sidebar active={active} />

@@ -761,6 +761,10 @@ a {
 
 /* ---------- reveal ---------- */
 
+html.reveal-initial [data-reveal] {
+  transition: none;
+}
+
 [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
