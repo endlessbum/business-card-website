@@ -602,10 +602,10 @@ function App() {
       window.scrollTo(0, 0)
       html.style.scrollBehavior = prev
     }
-    reset()
+    if (!window.location.hash) reset()
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
-        if (window.scrollY <= 1) reset()
+        if (!window.location.hash && window.scrollY <= 1) reset()
       })
     }
   }, [])
